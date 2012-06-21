@@ -8,31 +8,17 @@
 
  /* Create and populate the pData object */
  $MyData = new pData();  
- $MyData->addPoints(array(24,-25,26,25,25),"Temperature");
- $MyData->addPoints(array(1,2,VOID,9,10),"Humidity 1");
- $MyData->addPoints(array(1,VOID,7,-9,0),"Humidity 2");
- $MyData->addPoints(array(-1,-1,-1,-1,-1),"Humidity 3");
- $MyData->addPoints(array(0,0,0,0,0),"Vide");
- $MyData->setSerieOnAxis("Temperature",0);
- $MyData->setSerieOnAxis("Humidity 1",1);
- $MyData->setSerieOnAxis("Humidity 2",1);
- $MyData->setSerieOnAxis("Humidity 3",1);
- $MyData->setSerieOnAxis("Vide",2);
- $MyData->setAxisPosition(2,AXIS_POSITION_RIGHT);
- $MyData->setAxisName(0,"Temperature");
- $MyData->setAxisName(1,"Humidity");
- $MyData->setAxisName(2,"Empty value");
-
- /* Associate a color to each axis */
- $MyData->setAxisColor(0,array("R"=>102,"G"=>129,"B"=>63));
- $MyData->setAxisColor(1,array("R"=>129,"G"=>72,"B"=>63));
- $MyData->setAxisColor(2,array("R"=>63,"G"=>89,"B"=>129));
+ $MyData->addPoints(array(1700,2500,7800,4500,3150),"Distance");
+ $MyData->setAxisName(0,"Maximum distance");
+ $MyData->setAxisUnit(0,"m");
+ $MyData->setAxisDisplay(0,AXIS_FORMAT_CUSTOM,"YAxisFormat");
 
  /* Create the abscissa serie */
- $MyData->addPoints(array("Jan","Feb","Mar","Apr","May","Jun"),"Labels");
- $MyData->setSerieDescription("Labels","My labels");
- $MyData->setAbscissa("Labels");
- $MyData->setAbscissaName("Months");
+ $MyData->addPoints(array(1230768000,1233446400,1235865600,1238544000,1241136000,1243814400),"Timestamp");
+ $MyData->setSerieDescription("Timestamp","Sampled Dates");
+ $MyData->setAbscissa("Timestamp");
+ $MyData->setAbscissaName("Dates");
+ $MyData->setXAxisDisplay(AXIS_FORMAT_CUSTOM,"XAxisFormat");
 
  /* Create the pChart object */
  $myPicture = new pImage(700,230,$MyData);
@@ -55,16 +41,19 @@
 
  /* Set the default font */
  $myPicture->setFontProperties(array("FontName"=>"../fonts/pf_arma_five.ttf","FontSize"=>6));
- 
+
  /* Draw the scale */
- $myPicture->setGraphArea(90,60,660,190);
- $myPicture->drawScale(array("LabelSkip"=>1,"DrawYLines"=>array(0),"Pos"=>SCALE_POS_LEFTRIGHT));
+ $myPicture->setGraphArea(60,60,660,190);
+ $myPicture->drawScale();
+ $myPicture->drawFilledRectangle(60,60,660,190,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
 
  /* Write the chart title */
  $myPicture->setFontProperties(array("FontName"=>"../fonts/Forgotte.ttf","FontSize"=>11));
  $myPicture->drawText(350,55,"My chart title",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
- $myPicture->drawFilledRectangle(90,60,660,190,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
 
  /* Render the picture (choose the best way) */
- $myPicture->autoOutput("pictures/example.drawScale.color.png");
+ $myPicture->autoOutput("pictures/example.drawScale.custom.png");
+
+ function YAxisFormat($Value) { return(round($Value/1000,2)."k"); }
+ function XAxisFormat($Value) { return((($Value-1230768000)/(60*60*24))." day"); }
 ?>

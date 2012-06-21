@@ -44,9 +44,9 @@
  $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>20)); 
 
  /* Draw static thresholds */ 
- $myPicture->setFontProperties(array("FontName"=>"../fonts/pf_arma_five.ttf","FontSize"=>6));
- $myPicture->drawThreshold(5,array("WriteCaption"=>TRUE,"Caption"=>"Step 1","BoxAlpha"=>100,"BoxR"=>255,"BoxG"=>40,"BoxB"=>70,"Alpha"=>70,"Ticks"=>1,"R"=>255,"G"=>40,"B"=>70));
- $myPicture->drawThreshold(15,array("WriteCaption"=>TRUE,"Caption"=>"Step 2","BoxAlpha"=>100,"BoxR"=>40,"BoxG"=>70,"BoxB"=>255,"Alpha"=>70,"Ticks"=>2,"R"=>40,"G"=>70,"B"=>255));
+ $myPicture->setFontProperties(array("FontName"=>"../fonts/Forgotte.ttf","FontSize"=>10));
+ $myPicture->drawXThreshold("Feb",array("ValueIsLabel"=>TRUE,"WriteCaption"=>TRUE,"Caption"=>"Step 1","Alpha"=>70,"Ticks"=>1));
+ $myPicture->drawXThreshold(2,array("WriteCaption"=>TRUE,"Caption"=>"Step 2","Alpha"=>70,"Ticks"=>2,"R"=>0,"G"=>0,"B"=>255));
 
  /* Disable shadow computing */ 
  $myPicture->setShadow(FALSE);
@@ -54,13 +54,14 @@
  /* Draw the scale and do some cosmetics */ 
  $myPicture->setGraphArea(500,60,670,190);
  $myPicture->drawFilledRectangle(505,65,665,185,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
+ $myPicture->setFontProperties(array("FontName"=>"../fonts/Forgotte.ttf","FontSize"=>11));
  $myPicture->drawScale(array("XMargin"=>5,"YMargin"=>5,"Floating"=>TRUE,"Pos"=>SCALE_POS_TOPBOTTOM,"DrawSubTicks"=>TRUE));
  $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>20)); 
 
  /* Draw static thresholds */ 
- $myPicture->drawThreshold(5,array("Alpha"=>70,"Ticks"=>1));
- $myPicture->drawThreshold(array(10,12),array("Alpha"=>70,"Ticks"=>2,"R"=>0,"G"=>0,"B"=>255));
+ $myPicture->drawXThreshold(array(1,3),array("Alpha"=>70,"Ticks"=>1));
+ $myPicture->drawXThreshold(2,array("Alpha"=>70,"Ticks"=>2,"R"=>0,"G"=>0,"B"=>255));
 
  /* Render the picture (choose the best way) */
- $myPicture->autoOutput("pictures/example.drawThreshold.png");
+ $myPicture->autoOutput("pictures/example.drawXThreshold.png");
 ?>

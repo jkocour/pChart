@@ -1849,7 +1849,6 @@
             }
           }
          $AutoMargin = (($AxisMax-$AxisMin)/100)*$XReleasePercent;
-
          $Data["Axis"][$AxisID]["Min"] = $AxisMin-$AutoMargin; $Data["Axis"][$AxisID]["Max"] = $AxisMax+$AutoMargin;
          if ( $Mode == SCALE_MODE_START0 ) { $Data["Axis"][$AxisID]["Min"] = 0; }
         }
@@ -1889,8 +1888,7 @@
        $MaxDivs = floor($Height/$MinDivHeight);
 
        if ( $Mode == SCALE_MODE_ADDALL_START0 ) { $Data["Axis"][$AxisID]["Min"] = 0; }
-
-       $Scale   = $this->computeScale($Data["Axis"][$AxisID]["Min"],$Data["Axis"][$AxisID]["Max"],$MaxDivs,$Factors,$AxisID);
+	   $Scale   = $this->computeScale($Data["Axis"][$AxisID]["Min"],$Data["Axis"][$AxisID]["Max"],$MaxDivs,$Factors,$AxisID);
 
        $Data["Axis"][$AxisID]["Margin"]    = $AxisParameter["Identity"] == AXIS_X ? $XMargin : $YMargin;
        $Data["Axis"][$AxisID]["ScaleMin"]  = $Scale["XMin"];
@@ -2501,7 +2499,7 @@
      foreach ($Factors as $Key => $Factor)
       $Results[$Factor] = $this->processScale($XMin,$XMax,$MaxDivs,array($Factor),$AxisID);
 
-     /* Remove scales that are creating to much decimals */
+	 /* Remove scales that are creating to much decimals */
      $GoodScaleFactors = "";
      foreach ($Results as $Key => $Result)
       {
@@ -2537,6 +2535,7 @@
       $Mode = AXIS_FORMAT_DEFAULT;
 
      $Scale = "";
+
      if ( $XMin != $XMax )
       {
        $Found = FALSE; $Rescaled = FALSE; $Scaled10Factor = .0001; $Result = 0;
@@ -3130,7 +3129,10 @@
      if ( $Value == VOID ) { return(""); }
 
      if ( $Mode == AXIS_FORMAT_CUSTOM )
-      { if ( function_exists($Format) ) { return(call_user_func($Format,$Value)); } }
+      { 
+		 if(is_callable($Format)) {
+			 return $Format($Value);
+		 } elseif ( function_exists($Format) ) { return(call_user_func($Format,$Value)); } }
 
      if ( $Mode == AXIS_FORMAT_DATE )
       { if ( $Format == NULL ) { $Pattern = "d/m/Y"; } else { $Pattern = $Format; } return(date($Pattern,$Value)); }

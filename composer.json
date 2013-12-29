@@ -1,0 +1,13 @@
+{
+    "name": "jkocour/pchart",
+    "authors": [
+        {
+            "name": "Karel Hak",
+            "email": "karel.hak@fregis.cz"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    }
+}
